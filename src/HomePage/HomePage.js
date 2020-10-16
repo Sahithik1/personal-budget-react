@@ -1,6 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {Pie} from "react-chartjs-2";
+import D3chart from '../D3chart/D3chart';
 
-function HomePage() {
+const HomePage = () => {
+  const [chartData, setChartData] = useState({});
+  const [data, setData] = useState({});
+  const chart = () => {
+    let budgetTitle = [];
+    let budgetValue = [];
+
+    axios.get('http://localhost:3001/budget')
+    .then(res => {
+      for (var i = 0; i< res.data.myBudget.length; i++) {
+       budgetTitle.push(res.data.myBudget[i].title);
+       budgetValue.push(res.data.myBudget[i].budget);
+      }
+    setData(res.data.myBudget);
+    setChartData({
+      labels: budgetTitle,
+      datasets: [
+        {
+          label: "Pie chart",
+          data: budgetValue,
+          backgroundColor : ['#ffcd56',
+          '#ff6384',
+          '#36a2eb',
+          '#fd6b19',
+          '#800080',
+          '#000080',
+          '#00FFFF',
+          '#008000'
+          ],
+          hoverBackgroundColor: [
+            '#501800',
+            '#4B5000',
+            '#175000',
+            '#003350',
+            '#35014F',
+            '#ff6384',
+            '#36a2eb',
+            '#fd6b19'
+            ],
+          borderWidth: 3
+        }
+      ]
+    })
+  }).catch(()=> {
+
+  })
+}
+
+  useEffect(() => {
+    chart();
+  }, []);
   return (
     <div className="container center">
 
@@ -33,10 +86,15 @@ function HomePage() {
             </article>
     
             <article>
-                <h1>Chart</h1>
-                <p>
-                    <canvas id="myChart" width="400" height="350"></canvas> 
-                </p>
+                <h1>Pie chart</h1>
+                <div style={{height:"400px",width:"400px"}}>
+                    <Pie data = {chartData} 
+                    options={{
+                        title:{
+                          display:true,
+                          text:'Pie chart for montly expenses',
+                          fontSize:10}}} />
+                </div>
             </article>
     
             <article>
@@ -65,7 +123,9 @@ function HomePage() {
             </article>
             <article>
                 <h1>d3 chart</h1>
-                    <div id="chart-area"></div>
+                <D3chart>
+                    data={data}
+                </D3chart>
             </article>
 
         </div>
@@ -75,8 +135,7 @@ function HomePage() {
 
     
 </div>    
-    
-  );
-}
+  )
+  }
 
 export default HomePage;

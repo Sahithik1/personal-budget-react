@@ -1,0 +1,38 @@
+{"myBudget": 
+    [
+        {
+            "title": "Eat out",
+            "budget": 25
+        },
+        {
+            "title": "Rent",
+            "budget": 375
+        },
+        {
+            "title": "Grocery",
+            "budget":110
+        },
+        {
+            "title": "Shopping",
+            "budget":90
+        },
+        {
+            "title": "Fee",
+            "budget":200
+        },
+        {
+            "title": "repair",
+            "budget":15
+        },
+        {
+            "title": "Electricity",
+            "budget":30
+        },
+        {
+            "title": "Wifi",
+            "budget":20
+        }
+
+    ]
+
+}
